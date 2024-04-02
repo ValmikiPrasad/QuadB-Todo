@@ -1,34 +1,43 @@
-import {createSlice, nanoid } from '@reduxjs/toolkit';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
+// Define initial state
 const initialState = {
-        todos: []
+    todos: []
 }
+
+// Create todoSlice
 export const todoSlice = createSlice({
     name: 'todo',
     initialState,
     reducers: {
+        // Reducer to add a new todo
         addTodo: (state, action) => {
             const todo = {
-                id: nanoid(), 
-                text: action.payload
+                id: nanoid(), // Generate unique ID for todo
+                text: action.payload // Extract todo text from action payload
             }
-            state.todos.push(todo)
+            state.todos.push(todo); // Add new todo to state
         },
+        // Reducer to remove a todo
         removeTodo: (state, action) => {
-            state.todos = state.todos.filter((todo) => todo.id !== action.payload )
+            state.todos = state.todos.filter((todo) => todo.id !== action.payload ); // Filter out todo with specified ID
         },
-        setStore:(state,action)=>{
-            state.todos = action.payload;
+        // Reducer to set todos from local storage
+        setStore: (state, action) => {
+            state.todos = action.payload; // Set todos from action payload
         },
+        // Reducer to mark a todo as completed or incomplete
         completeTodo: (state, action) => {
-            const todo = state.todos.find(todo => todo.id === action.payload);
+            const todo = state.todos.find(todo => todo.id === action.payload); // Find todo with specified ID
             if (todo) {
                 todo.completed = !todo.completed; // Toggle the completed status
             }
         }
     }
-})  
+});
 
-export const {addTodo, removeTodo,setStore,completeTodo} = todoSlice.actions
+// Export action creators
+export const { addTodo, removeTodo, setStore, completeTodo } = todoSlice.actions;
 
-export default todoSlice.reducer
+// Export todoReducer
+export default todoSlice.reducer;
